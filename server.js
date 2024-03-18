@@ -2,15 +2,15 @@ require('dotenv').config();
 var user = process.env.MONGO_DB_USER;
 var password = process.env.MONGO_DB_PASSWORD;
 
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+import express from "express";
+import { Schema, model, connect } from "mongoose";
+import { json } from "body-parser";
 
 const server = express();
-server.use(bodyParser.json())
+server.use(json())
 const port = 3000;
 
-const productSchema = new mongoose.Schema({
+const productSchema = new Schema({
   name: String,
   description: String,
   price: Number,
@@ -18,12 +18,12 @@ const productSchema = new mongoose.Schema({
   category: String
 });
 
-const Product = mongoose.model("Products", productSchema);
+const Product = model("Products", productSchema);
 
 main().catch(err => console.log(err));
 
 async function main() {
-  mongoose.connect(`mongodb+srv://${user}:${password}@cluster0safasd.ahiq61f.mongodb.net/test?retryWrites=true&w=majority`, {
+  connect(`mongodb+srv://${user}:${password}@cluster0safasd.ahiq61f.mongodb.net/test?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
